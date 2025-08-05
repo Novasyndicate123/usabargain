@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NovaBargains - Latest Deals</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+        .deal { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        h2 { margin: 0; }
+        .price { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>NovaBargains - Latest Deals</h1>
+    {% for deal in deals %}
+    <div class="deal">
+        <h2>{{ deal[1] }} <span class="price">${{ "%.2f"|format(deal[2]) }}</span></h2>
+        <p>{{ deal[3] }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
