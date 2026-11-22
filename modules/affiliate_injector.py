@@ -11,17 +11,9 @@ AFFILIATE_DOMAINS = {
 }
 
 def inject_affiliate_links(deal_url: str) -> str:
-    """
-    Detects affiliate-supported domains in URLs and appends tracking parameters.
-    """
-    for domain, param in AFFILIATE_DOMAINS.items():
-        if domain in deal_url:
-            if '?' in deal_url:
-                if param not in deal_url:
-                    return deal_url + '&' + param
-            else:
-                return deal_url + '?' + param
-    return deal_url
+    """Delegates to affiliate.py so tags/UTMs are consistent site-wide."""
+    from affiliate import inject_affiliate_link
+    return inject_affiliate_link(deal_url)
 
 def update_deals_with_affiliate_links():
     with sqlite3.connect(DB_PATH) as conn:

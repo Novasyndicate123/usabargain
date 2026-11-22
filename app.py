@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 from modules.voting import cast_vote
+from affiliate import affiliate_anchor, DISCLOSURE
 
 DB_PATH = 'data/bargains.db'  # Adjust if necessary
 
@@ -39,6 +40,8 @@ def main():
             st.markdown(f"<div style='{color_style};padding:10px;border-radius:5px;'>", unsafe_allow_html=True)
             st.subheader(deal["title"])
             st.write(f"Upvotes: {deal['upvotes'] or 0} | Downvotes: {deal['downvotes'] or 0} | AI Score: {score:.2f}")
+            if "url" in deal.keys() and deal["url"]:
+                st.markdown(affiliate_anchor(deal["url"], "View deal"), unsafe_allow_html=True)
             col1, col2 = st.columns(2)
             with col1:
                 if st.button(f"Upvote #{deal['id']}"):
@@ -49,6 +52,8 @@ def main():
                     cast_vote(deal["id"], "down", user_id)
                     st.experimental_rerun()
             st.markdown("</div>", unsafe_allow_html=True)
+
+    st.caption(DISCLOSURE)
 
 if __name__ == "__main__":
     main()
